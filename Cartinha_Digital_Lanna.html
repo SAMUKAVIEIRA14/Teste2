@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Para minha Lanna</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #000;
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      position: relative;
+    }
+
+    h1 {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      font-size: 2.8em;
+      color: #ff66b2;
+      text-shadow: 0 0 10px #ff66b2, 0 0 20px #ff66b2;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .heart {
+      position: absolute;
+      top: -50px;
+      font-size: 2rem;
+      animation: fall linear infinite;
+      user-select: none;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .click-heart {
+      position: absolute;
+      color: #ff66b2;
+      animation: pop 0.6s ease-out forwards;
+      pointer-events: none;
+      font-size: 1.2rem;
+      z-index: 20;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0); opacity: 1; }
+      100% { transform: scale(1.5); opacity: 0; }
+    }
+
+    .big-heart {
+      position: absolute;
+      color: #ff66b2;
+      font-size: 8rem;
+      animation: rise 1.5s ease-out forwards;
+      pointer-events: none;
+      z-index: 20;
+    }
+
+    @keyframes rise {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-200px); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Eᴜ ᴛᴇ ᴀᴍᴏ ᴍɪɴʜᴀ ʟᴀɴɴᴀ</h1>
+
+  <audio autoplay loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    Seu navegador não suporta áudio em HTML5.
+  </audio>
+
+  <script>
+    function createFallingHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.textContent = '🩷';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = 3 + Math.random() * 2 + 's';
+      heart.style.fontSize = (1 + Math.random() * 2) + 'rem';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 5000);
+    }
+
+    setInterval(createFallingHeart, 150);
+
+    document.addEventListener('click', (e) => {
+      const heart = document.createElement('div');
+      heart.classList.add('click-heart');
+      heart.textContent = '🩷';
+      heart.style.left = e.clientX + 'px';
+      heart.style.top = e.clientY + 'px';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 600);
+    });
+
+    let pressTimer;
+    document.addEventListener('mousedown', (e) => {
+      pressTimer = setTimeout(() => {
+        const bigHeart = document.createElement('div');
+        bigHeart.classList.add('big-heart');
+        bigHeart.textContent = '🩷';
+        bigHeart.style.left = (e.clientX - 60) + 'px';
+        bigHeart.style.top = (e.clientY - 60) + 'px';
+        document.body.appendChild(bigHeart);
+        setTimeout(() => bigHeart.remove(), 1500);
+      }, 5000);
+    });
+
+    document.addEventListener('mouseup', () => {
+      clearTimeout(pressTimer);
+    });
+  </script>
+</body>
+</html>
